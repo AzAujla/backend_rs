@@ -1,0 +1,23 @@
+[package]
+name = "ormprac"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.7.5"
+dotenvy = "0.15.7"
+httpc-test = "0.1.9"
+anyhow = "1.0.86"
+async-trait = "0.1.81"
+serde = {version="1.0.204", features=["derive"]}
+serde_json = "1.0.120"
+tokio = "1.38.0"
+tower = "0.4.13"
+tower-cookies = "0.10.0"
+tower-http = {version = "0.5.2", features=["normalize-path", "fs"]}
+diesel = { version = "2.2.1", features = ["sqlite"] }
+askama = "0.12.1"
+
+[[bin]]
+name="server"
+path="src/main.rs"

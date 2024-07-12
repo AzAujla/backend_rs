@@ -1,0 +1,6 @@
+{% for button in buttons %}
+    <div hx-get="{{button.link}}" hx-push-url="true" hx-swap="innerHTML" hx-target="main" class="flex flex-col md:flex-row items-center md:text-md">
+        <i class="bi bi-{{button.icon}} text-2xl md:text-md me-2"></i>
+        {{button.name}}
+    </div>
+{% endfor %}
