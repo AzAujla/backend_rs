@@ -1,4 +1,9 @@
 use askama::Template;
+use axum::response::Html;
+
+pub async fn view<T>(data: impl Template) -> Html<String>{
+    return Html::from(data.render().unwrap());
+}
 
 #[derive(Template)]
 #[template(path = "index.html")]

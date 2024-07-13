@@ -1,3 +1,5 @@
 /target
 /templates/node_modules
 /assets/script.js
+/assets/main.css
+/.vscode

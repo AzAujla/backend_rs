@@ -588,8 +588,8 @@ video {
   width: 100vw;
 }
 
-.min-w-\[6dvw\]{
-  min-width: 6dvw;
+.min-w-\[10dvw\]{
+  min-width: 10dvw;
 }
 
 .grow{
@@ -678,6 +678,10 @@ video {
     justify-content: flex-start;
   }
 
+  .md\:gap-2{
+    gap: 0.5rem;
+  }
+
   .md\:border-r{
     border-right-width: 1px;
   }
@@ -686,9 +690,8 @@ video {
     border-top-width: 0px;
   }
 
-  .md\:text-sm{
-    font-size: 0.875rem;
-    line-height: 1.25rem;
+  .md\:pl-4{
+    padding-left: 1rem;
   }
 }
 

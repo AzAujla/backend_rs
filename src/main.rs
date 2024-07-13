@@ -1,13 +1,15 @@
 use askama::Template;
-use axum::{extract::Request, response::Html, routing::get, Router, ServiceExt};
+use axum::{extract::Request, middleware, response::Html, routing::get, Router, ServiceExt};
 use templates::*;
 use tower::Layer;
 use tower_cookies::CookieManagerLayer;
 use tower_http::{normalize_path::NormalizePathLayer, services::ServeDir};
 
+mod auth;
+mod schema;
 mod templates;
 // mod database;
-// mod middlewares;
+mod middlewares;
 
 #[tokio::main]
 async fn main() -> () {
@@ -78,14 +80,13 @@ fn routes_parts() -> Router {
 }
 
 fn routes_pages() -> Router {
-    return Router::new().route("/", get(index_page));
+    return Router::new()
+        .route("/", get(index_page))
+        .nest("/auth", auth::routes())
+        .layer(middleware::from_fn(middlewares::use_layout));
 
-    async fn index_page() -> Html<String> {
+    async fn index_page() -> Html<&'static str> {
         println!("->> GET {:<12} PAGE", "indexPage");
-        let hello = HelloTemplate {
-            app_title: &dotenvy::var("APP_NAME").unwrap(),
-            content: "",
-        };
-        return Html::from(hello.render().unwrap());
+        return Html::from("Hello");
     }
 }
