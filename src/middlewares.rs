@@ -7,7 +7,7 @@ use axum::{
 };
 use tower_cookies::{Cookie, Cookies};
 
-use crate::{view, HelloTemplate};
+use crate::HelloTemplate;
 
 pub async fn mw_require_auth(
     cookies: Cookies,

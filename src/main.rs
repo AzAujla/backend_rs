@@ -1,5 +1,6 @@
 use askama::Template;
 use axum::{extract::Request, middleware, response::Html, routing::get, Router, ServiceExt};
+use diesel::{sqlite::Sqlite, SqliteConnection};
 use templates::*;
 use tower::Layer;
 use tower_cookies::CookieManagerLayer;
@@ -8,8 +9,13 @@ use tower_http::{normalize_path::NormalizePathLayer, services::ServeDir};
 mod auth;
 mod schema;
 mod templates;
-// mod database;
+mod database;
+mod models;
 mod middlewares;
+
+pub type BackendDbType = diesel::sqlite::Sqlite;
+pub type DbConnectionType = diesel::sqlite::SqliteConnection;
+pub const DEFAULT_CONTENT:&str = "Ohayou Sekai";
 
 #[tokio::main]
 async fn main() -> () {
@@ -87,6 +93,6 @@ fn routes_pages() -> Router {
 
     async fn index_page() -> Html<&'static str> {
         println!("->> GET {:<12} PAGE", "indexPage");
-        return Html::from("Hello");
+        return Html::from(DEFAULT_CONTENT);
     }
 }

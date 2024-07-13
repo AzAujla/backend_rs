@@ -1,7 +1,9 @@
 use diesel::{Connection, SqliteConnection};
 use dotenvy::dotenv;
 
-pub fn establish_connection() -> SqliteConnection {
+use crate::DbConnectionType;
+
+pub fn establish_connection() -> DbConnectionType {
     dotenv().ok();
 
     let db_url = dotenvy::var("DATABASE_URL").expect("DATABASE URL MISSING");
