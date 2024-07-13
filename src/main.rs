@@ -1,6 +1,6 @@
 use askama::Template;
 use axum::{extract::Request, middleware, response::Html, routing::get, Router, ServiceExt};
-use diesel::{sqlite::Sqlite, SqliteConnection};
+use middlewares::mw_require_auth;
 use templates::*;
 use tower::Layer;
 use tower_cookies::CookieManagerLayer;
@@ -88,6 +88,7 @@ fn routes_parts() -> Router {
 fn routes_pages() -> Router {
     return Router::new()
         .route("/", get(index_page))
+        .layer(middleware::from_fn(mw_require_auth))
         .nest("/auth", auth::routes())
         .layer(middleware::from_fn(middlewares::use_layout));
 

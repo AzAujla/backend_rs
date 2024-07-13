@@ -13,5 +13,5 @@ pub struct User {
     pub user_type_id: i32,
     pub account_status_id: i32,
     pub created_at: PrimitiveDateTime,
-    pub updated_at: PrimitiveDateTime,
+    updated_at: PrimitiveDateTime,
 }

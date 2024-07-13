@@ -1,13 +1,13 @@
 use std::collections::HashMap;
 
-use axum::{http::StatusCode, response::Html, routing::get, Form, Json, Router};
+use axum::{response::Html, routing::get, Form, Router};
 use diesel::{prelude::*, ExpressionMethods, QueryDsl, SelectableHelper};
 use serde::Deserialize;
 use templates::{LoginPage, RegisterPage};
 use tower_cookies::{Cookie, Cookies};
 
 use crate::{
-    database::establish_connection, models::User, schema::{self, users::{self, pswd}}, view, HelloTemplate, DbConnectionType, DEFAULT_CONTENT
+    database::establish_connection, models::User, schema::{self, users}, view, DbConnectionType, DEFAULT_CONTENT
 };
 
 mod templates;
