@@ -4,6 +4,7 @@
 - Diesel (SQLite)
 - Askama (Backend HTML Templates)
 - HTMX (Frontend)
+- Tailwind (CSS)
 
   ## Folder Structure
   ### ./scr
