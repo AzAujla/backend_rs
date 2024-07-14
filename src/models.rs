@@ -15,3 +15,12 @@ pub struct User {
     pub created_at: PrimitiveDateTime,
     updated_at: PrimitiveDateTime,
 }
+#[derive(Queryable, Selectable)]
+#[diesel(table_name = crate::schema::sessions)]
+#[diesel(check_for_backend(BackendDbType))]
+pub struct Session {
+    id: i32,
+    user_id: i32,
+    token: String,
+    created_at: PrimitiveDateTime,
+}

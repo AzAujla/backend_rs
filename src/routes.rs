@@ -1,46 +1,11 @@
 use askama::Template;
-use axum::{extract::Request, middleware, response::Html, routing::get, Router, ServiceExt};
-use middlewares::mw_require_auth;
-use templates::*;
-use tower::Layer;
-use tower_cookies::CookieManagerLayer;
-use tower_http::{normalize_path::NormalizePathLayer, services::ServeDir};
+use axum::{middleware, response::Html, routing::get, Router};
+use tower_cookies::{CookieManagerLayer, Cookies};
+use tower_http::services::ServeDir;
 
-mod auth;
-mod schema;
-mod templates;
-mod database;
-mod models;
-mod middlewares;
+use crate::{middlewares::{self, mw_require_auth}, templates::NavButton, templates::Navbar, DEFAULT_CONTENT};
 
-pub type BackendDbType = diesel::sqlite::Sqlite;
-pub type DbConnectionType = diesel::sqlite::SqliteConnection;
-pub const DEFAULT_CONTENT:&str = "Ohayou Sekai";
-
-#[tokio::main]
-async fn main() -> () {
-    let routes = NormalizePathLayer::trim_trailing_slash().layer(routes_all());
-
-    println!("SERVER ONLINE");
-    println!(
-        "LISTENING ON http://{}",
-        dotenvy::var("SERVER_URL").unwrap()
-    );
-    axum::serve(
-        tokio::net::TcpListener::bind(
-            dotenvy::var("SERVER_URL").unwrap_or_else(|_| String::from("127.0.0.1:8080")),
-        )
-        .await
-        .unwrap(),
-        ServiceExt::<Request>::into_make_service(routes),
-    )
-    .await
-    .unwrap();
-
-    return ();
-}
-
-fn routes_all() -> Router {
+pub fn routes_all() -> Router {
     return Router::new()
         .nest("/parts", routes_parts())
         .merge(routes_pages())
@@ -89,10 +54,10 @@ fn routes_pages() -> Router {
     return Router::new()
         .route("/", get(index_page))
         .layer(middleware::from_fn(mw_require_auth))
-        .nest("/auth", auth::routes())
+        .nest("/auth", crate::auth::routes())
         .layer(middleware::from_fn(middlewares::use_layout));
 
-    async fn index_page() -> Html<&'static str> {
+    async fn index_page(_cookies: Cookies) -> Html<&'static str> {
         println!("->> GET {:<12} PAGE", "indexPage");
         return Html::from(DEFAULT_CONTENT);
     }

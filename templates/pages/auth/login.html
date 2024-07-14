@@ -1,5 +1,9 @@
 <div class="p-2 flex flex-col md:flex-row-reverse h-[93.5dvh]">
   <form
+    hx-post="/auth/login"
+    hx-target="main"
+    hx-swap="innerHTML"
+    hx-push-url="true"
     class="w-full max-w-screen-md border dark:border-neutral-800 shadow-lg rounded-b-lg md:rounded-l-lg md:rounded-br-none p-2 dark:shadow-neutral-800 md:h-full"
   >
     <div class="mb-4">
@@ -7,10 +11,11 @@
       <input
         class="block my-2 rounded bg-neutral-200 dark:bg-neutral-800 w-full max-w-screen-sm"
         type="text"
+        name="username"
         requied
       />
-      {% if errors.get("name").is_some() %}
-      <div class="text-red-500">{{errors.get("name").unwrap()}}</div>
+      {% if errors.get("username").is_some() %}
+      <div class="text-red-500">{{errors.get("username").unwrap()}}</div>
       {% endif %}
     </div>
     <div class="mb-4">
@@ -18,6 +23,7 @@
       <input
         class="block my-2 rounded bg-neutral-200 dark:bg-neutral-800 w-full max-w-screen-sm"
         type="password"
+        name="password"
         requied
       />
       {% if errors.get("password").is_some() %}

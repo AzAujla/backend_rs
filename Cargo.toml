@@ -15,10 +15,11 @@ tokio = "1.38.0"
 tower = "0.4.13"
 tower-cookies = "0.10.0"
 tower-http = {version = "0.5.2", features=["normalize-path", "fs"]}
-diesel = { version = "2.2.1", features = ["sqlite", "time"] }
+diesel = { version = "2.2.1", features = ["sqlite", "time", "chrono"] }
 askama = "0.12.1"
 pwhash = "1.0.0"
+chrono = "0.4.38"
 
 [[bin]]
 name="server"
-path="src/main.rs"
+path="src/lib.rs"
